@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.speech.RecognizerIntent
 import android.widget.Button
 import android.widget.ImageButton
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             tvResult.text = "Error: Reconocimiento de voz no disponible"
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -56,99 +58,26 @@ class MainActivity : AppCompatActivity() {
                 tvResult.text = "Texto hablado: $spokenText"
 
                 spokenText = spokenText.toLowerCase().toString()
-                /*
-                when(spokenText){
-                    "google" ->{
-                        val intent = packageManager.getLaunchIntentForPackage("com.android.chrome")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Google no encontrada"
-                        }
-                    }
-                    "calendario" ->{
-                        val intent = packageManager.getLaunchIntentForPackage("com.google.android.calendar")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Calendario no encontrada"
-                        }
-                    }
-                    "calculadora" ->{
-                        val intent = packageManager.getLaunchIntentForPackage("com.google.android.calculator")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Calculadora no encontrada"
-                        }
-                    }
-                    "maps" ->{
-                        val intent = packageManager.getLaunchIntentForPackage("com.google.android.apps.maps")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Maps no encontrada"
-                        }
-                    }
-                    "gmail" ->{
-                        val intent = packageManager.getLaunchIntentForPackage("com.google.android.gm")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Gmail no encontrada"
-                        }
-                    }
-                }
-
-                 */
-
-                if (spokenText.equals("google", ignoreCase = true)) {
-                    val intent = packageManager.getLaunchIntentForPackage("com.android.chrome")
-                    if (intent != null) {
+                when {
+                    spokenText == "google" ->{
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
                         startActivity(intent)
-                    } else {
-                        tvResult.text = "Error: Aplicación de Google no encontrada"
                     }
-                } else {
-                    if (spokenText.equals("calendario", ignoreCase = true)) {
-                        val intent =
-                            packageManager.getLaunchIntentForPackage("com.google.android.calendar")
-                        if (intent != null) {
-                            startActivity(intent)
-                        } else {
-                            tvResult.text = "Error: Aplicación de Calendario no encontrada"
-                        }
-
-                    } else {
-                        if (spokenText.equals("calculadora", ignoreCase = true)) {
-                            val intent =
-                                packageManager.getLaunchIntentForPackage("com.google.android.calculator")
-                            if (intent != null) {
-                                startActivity(intent)
-                            } else {
-                                tvResult.text = "Error: Aplicación de Calculadora no encontrada"
-                            }
-                        } else {
-                            if (spokenText.equals("maps", ignoreCase = true)) {
-                                val intent =
-                                    packageManager.getLaunchIntentForPackage("com.google.android.apps.maps")
-                                if (intent != null) {
-                                    startActivity(intent)
-                                } else {
-                                    tvResult.text = "Error: Aplicación de Maps no encontrada"
-                                }
-                            } else {
-                                if (spokenText.equals("gmail", ignoreCase = true)) {
-                                    val intent =
-                                        packageManager.getLaunchIntentForPackage("com.google.android.gm")
-                                    if (intent != null) {
-                                        startActivity(intent)
-                                    } else {
-                                        tvResult.text = "Error: Aplicación de Gmail no encontrada"
-                                    }
-                                }
-                            }
-                        }
+                    spokenText == "calendario" ->{
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://calendar.google.com/calendar/u/0/r?hl=es&pli=1"))
+                        startActivity(intent)
+                    }
+                    spokenText == "calculadora" ->{
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=calculadora&rlz=1C1CHBF_esES1083ES1083&oq=calculadora&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTISCAEQABgUGIMBGIcCGLEDGIAEMhEIAhAAGAoYQxixAxiABBiKBTISCAMQABhDGIMBGLEDGIAEGIoFMhIIBBAAGEMYgwEYsQMYgAQYigUyEggFEAAYQxiDARixAxiABBiKBTINCAYQABiDARixAxiABDINCAcQABiDARixAxiABDINCAgQABiDARixAxiABDINCAkQABiDARixAxiABNIBCDE4MDdqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"))
+                        startActivity(intent)
+                    }
+                    spokenText == "maps" ->{
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps"))
+                        startActivity(intent)
+                    }
+                    spokenText == "gmail" ->{
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://mail.google.com/mail/u/0/#inbox"))
+                        startActivity(intent)
                     }
                 }
             }
